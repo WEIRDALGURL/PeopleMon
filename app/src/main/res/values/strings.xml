@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">PeopleMon</string>
+    <string name="username">Username</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="provide_username_password">You must provide a username and password</string>
+    <string name="login_failed">Login Failed</string>
+    <string name="fill_out_all_fields">You must fill out all fields</string>
+    <string name="provide_valid_email">You must provide a valid email address</string>
+    <string name="passwords_not_match">Passwords do not match</string>
+    <string name="registration_failed">Registration failed</string>
+</resources>
