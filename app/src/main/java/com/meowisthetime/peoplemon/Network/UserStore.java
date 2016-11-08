@@ -43,11 +43,11 @@ public class UserStore {
         }
     }
 
-//    public void setTokenExpiration(Date expiration) {
-//        SharedPreferences.Editor editor = sharedPrefs.edit();
-//        editor.putLong(Constants.tokenExpiration, expiration.getTime());
-//        editor.apply();
-//    }
+    public void setTokenExpiration(Date expiration) {
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.putLong(Constants.tokenExpiration, expiration.getTime());
+        editor.apply();
+    }
 
 
 }

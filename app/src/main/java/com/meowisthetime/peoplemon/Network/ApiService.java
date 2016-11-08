@@ -1,12 +1,15 @@
 package com.meowisthetime.peoplemon.Network;
 
 import com.meowisthetime.peoplemon.Models.Account;
+import com.meowisthetime.peoplemon.Models.User;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 
 /**
@@ -14,43 +17,6 @@ import retrofit2.http.POST;
  */
 
 public interface ApiService {
-
-//    @POST("token")
-//    Call<Account> login (@Body Account account);
-//
-//    @POST("register")
-//    Call<Account> register (@Body Account account);
-
-//
-//
-//
-//    @POST("api/category/createCategory")
-//    Call<Void> addCategory (@Body Category category);
-//
-//    @GET("api/category/getCategory/year/{year}/month/{month}/day/{day}")
-//    Call<Category[]> getWeekCategories (@Path("year") Integer year,
-//                                        @Path("month") Integer month,
-//                                        @Path("day")Integer day);
-//
-//
-//    @GET("api/category/getCategory/year/{year}/month/{month}")
-//    Call<Category[]> getMonthCategories (@Path("year") Integer year,
-//                                         @Path("month") Integer month);
-//
-//
-//
-//
-//
-//    @POST("api/expense/createExpense")
-//    Call<Expense> addExpense (@Body Expense expense);
-//
-//    @GET("api/expense/getExpenses/categoryId/{categoryId}")
-//    Call<Expense[]> getRecentExpenses (@Path("categoryId") Integer categoryId );
-//
-//    @GET("api/expense/getExpenses/year/{year}/month/{month}")
-//    Call<Expense[]> getMonthExpenses (@Path("year") Integer year,
-//                                      @Path("month") Integer month);
-
 
 //    @GET("api/Account/UserInfo")
 //    Call<Account[]> getUserInfo (@Path("userInfo"));
@@ -68,22 +34,19 @@ public interface ApiService {
 //    @POST("api/Account/SetPassword")
 //    Call<Account> c (@Body);
 //
-//    @POST("api/Account/Register")
-//    Call<Account> d (@Body);
-////
-//
-//
-//
-//
-//
-//
-//
-//    @GET("v1/User/Nearby")
-//    Call<User> a (@Path());
-//
-//
+
+    @POST("api/Account/Register")
+    Call<Void> register (@Body Account account);
+
+
+
+
+    @GET("v1/User/Nearby")
+    Call<User[]> findNearby(@Query("radiusInMeters") Integer radiusInMeters);
+
+
 //    @POST("v1/User/CheckIn")
-//    Call<User> a (@Body);
+//    Call<Void> checkin (@Body ("Latlong") Double Latlong);
 //
 //    @POST("v1/User/Catch")
 //    Call<User> a (@Body);
@@ -111,8 +74,6 @@ public interface ApiService {
                          @Field(value = "username", encoded = true) String username,
                          @Field(value = "password", encoded = true) String password);
 
-    @POST("api/Account/Register")
-    Call<Void> register (@Body Account account);
 
 
 }

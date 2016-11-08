@@ -10,74 +10,111 @@ import java.util.Date;
 
 public class User {
 
-    @SerializedName("username")
-    private String username;
+    @SerializedName("UserId")
+    private String userid;
 
-    @SerializedName("password")
-    private String password;
+    @SerializedName("UserName")
+    private String userName;
 
-    @SerializedName("email")
-    private String email;
+    @SerializedName("avatarBase64")
+    private String avatarBase64;
 
-    @SerializedName("token")
-    private String token;
+    @SerializedName("Longitude")
+    private Double longitude;
 
-    @SerializedName("expiration")
-    private Date expiration;
+    @SerializedName("Latitude")
+    private Double latitude;
+
+    @SerializedName("Created")
+    private Date created;
+
+    @SerializedName("CaughtUserId")
+    private String caughtUserId;
+
+    @SerializedName("RadiusInMeters")
+    private Double radiusInMeters;
+
 
     public User() {
     }
 
-    public User(String username, String password, String email) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
+
+    public User(String userid, String userName, String avatarBase64, Double longitude, Double latitude, Date created) {
+        this.userid = userid;
+        this.userName = userName;
+        this.avatarBase64 = avatarBase64;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.created = created;
     }
 
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public User(Double longitude, Double latitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
-
-    public String getUsername() {
-        return username;
+    public String getUserid() {
+        return userid;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getAvatarBase64() {
+        return avatarBase64;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAvatarBase64(String avatarBase64) {
+        this.avatarBase64 = avatarBase64;
     }
 
-    public String getToken() {
-        return token;
+    public Double getLongitude() {
+        return longitude;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
-    public Date getExpiration() {
-        return expiration;
+    public Double getLatitude() {
+        return latitude;
     }
 
-    public void setExpiration(Date expiration) {
-        this.expiration = expiration;
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public String getCaughtUserId() {
+        return caughtUserId;
+    }
+
+    public void setCaughtUserId(String caughtUserId) {
+        this.caughtUserId = caughtUserId;
+    }
+
+    public Double getRadiusInMeters() {
+        return radiusInMeters;
+    }
+
+    public void setRadiusInMeters(Double radiusInMeters) {
+        this.radiusInMeters = radiusInMeters;
+    }
 }
+

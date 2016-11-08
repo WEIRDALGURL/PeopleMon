@@ -1,12 +1,20 @@
 package com.meowisthetime.peoplemon;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
 import com.davidstemmer.flow.plugin.screenplay.ScreenplayDispatcher;
 import com.meowisthetime.peoplemon.Network.UserStore;
+import com.meowisthetime.peoplemon.Stages.EditProfileStage;
 import com.meowisthetime.peoplemon.Stages.LoginStage;
 import com.meowisthetime.peoplemon.Stages.MapStage;
 
@@ -18,6 +26,7 @@ import flow.History;
 public class MainActivity extends AppCompatActivity {
     private Flow flow;
     private ScreenplayDispatcher dispatcher;
+    private Menu menu;
 
     @Bind(R.id.container)
     RelativeLayout container;
@@ -27,6 +36,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (Build.VERSION.SDK_INT >=23) {
+            if (!(ContextCompat.checkSelfPermission(this,
+            Manifest.permission.ACCESS_FINE_LOCATION) ==
+                    PackageManager.PERMISSION_GRANTED)) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            }
+        }
 
         //MUST HAVE, or container would be null
         ButterKnife.bind(this);
@@ -41,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         dispatcher.setUp(flow);
 
 
-        UserStore.getInstance().setToken(null);
+//        UserStore.getInstance().setToken(null);
 
         if (UserStore.getInstance().getToken() == null ||
                 UserStore.getInstance().getTokenExpiration() == null) {
@@ -61,4 +79,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_menu, menu);
+        this.menu = menu;
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Flow flow = PeopleMonApplication.getMainFlow();
+        switch (item.getItemId()) {
+            case R.id.edit_profile:
+                History newHistory = flow.getHistory().buildUpon()
+                        .push(new EditProfileStage())
+                        .build();
+                flow.setHistory(newHistory, Flow.Direction.FORWARD);
+                return true;
+            case R.id.logout_button:
+                UserStore.getInstance().setToken(null);
+                History logoutHistory = History.single(new LoginStage());
+                flow.setHistory(logoutHistory, Flow.Direction.REPLACE);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
 }

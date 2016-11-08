@@ -2,13 +2,13 @@ package com.meowisthetime.peoplemon.Views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 
 import com.meowisthetime.peoplemon.Models.Account;
 import com.meowisthetime.peoplemon.Network.RestClient;
@@ -99,7 +99,9 @@ public class LoginView extends LinearLayout {
                     if (response.isSuccessful()) {
                         Account authUser = response.body();
                         UserStore.getInstance().setToken(authUser.getToken());
-//                        UserStore.getInstance().setTokenExpiration(authUser.getExpiration());
+                        UserStore.getInstance().setTokenExpiration(authUser.getExpiration());
+
+                        Log.d("*****", UserStore.getInstance().getToken().toString());
 
                         Flow flow = PeopleMonApplication.getMainFlow();
                         History newHistory = History.single(new MapStage());
