@@ -7,8 +7,8 @@ import android.widget.RelativeLayout;
 
 import com.davidstemmer.flow.plugin.screenplay.ScreenplayDispatcher;
 import com.meowisthetime.peoplemon.Network.UserStore;
-import com.meowisthetime.peoplemon.Stages.BudgetListStage;
 import com.meowisthetime.peoplemon.Stages.LoginStage;
+import com.meowisthetime.peoplemon.Stages.MapStage;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -16,12 +16,12 @@ import flow.Flow;
 import flow.History;
 
 public class MainActivity extends AppCompatActivity {
-    private String TAG = "MainActivity";
     private Flow flow;
     private ScreenplayDispatcher dispatcher;
 
     @Bind(R.id.container)
     RelativeLayout container;
+    public Bundle savedInstanceState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +56,9 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (!flow.goBack()) {
             flow.removeDispatcher(dispatcher);
-            flow.setHistory(History.single(new BudgetListStage()), Flow.Direction.BACKWARD);
+            flow.setHistory(History.single(new MapStage()), Flow.Direction.BACKWARD);
             super.onBackPressed();
         }
     }
-
 
 }

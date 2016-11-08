@@ -12,4 +12,5 @@
     <string name="provide_valid_email">You must provide a valid email address</string>
     <string name="passwords_not_match">Passwords do not match</string>
     <string name="registration_failed">Registration failed</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

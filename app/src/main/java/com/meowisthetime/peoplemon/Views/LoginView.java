@@ -9,12 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+
 import com.meowisthetime.peoplemon.Models.Account;
 import com.meowisthetime.peoplemon.Network.RestClient;
 import com.meowisthetime.peoplemon.Network.UserStore;
 import com.meowisthetime.peoplemon.PeopleMonApplication;
 import com.meowisthetime.peoplemon.R;
-import com.meowisthetime.peoplemon.Stages.BudgetListStage;
+import com.meowisthetime.peoplemon.Stages.MapStage;
 import com.meowisthetime.peoplemon.Stages.RegisterStage;
 
 import butterknife.Bind;
@@ -101,7 +102,7 @@ public class LoginView extends LinearLayout {
 //                        UserStore.getInstance().setTokenExpiration(authUser.getExpiration());
 
                         Flow flow = PeopleMonApplication.getMainFlow();
-                        History newHistory = History.single(new BudgetListStage());
+                        History newHistory = History.single(new MapStage());
                         flow.setHistory(newHistory, Flow.Direction.REPLACE);
 
                     } else {
