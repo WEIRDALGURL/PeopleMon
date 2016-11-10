@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.meowisthetime.peoplemon.Models.User;
 import com.meowisthetime.peoplemon.R;
@@ -48,8 +47,6 @@ public class CaughtUserAdapter extends RecyclerView.Adapter<CaughtUserAdapter.Us
         if(position <users.size()){
             User user = users.get(position);
             holder.bindUser(user);
-
-            Toast.makeText(context, user.getUserName(), Toast.LENGTH_SHORT).show();
         }
     }
 

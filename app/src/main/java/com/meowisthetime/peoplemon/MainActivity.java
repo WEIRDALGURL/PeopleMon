@@ -149,6 +149,21 @@ public class MainActivity extends AppCompatActivity {
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
 
+//            File file = new File(picturePath);
+//
+//            //Convert to Bitmap Array
+//            Bitmap bm = BitmapFactory.decodeFile(file.getAbsolutePath());
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+//            byte[] b = baos.toByteArray();
+//
+//            //Take the bitmap Array and e
+//            // encode it to Base64
+//            String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+//
+//            Log.d("***BASE64****", encodedImage);
+//            makeApiCallForProfile(encodedImage);
+
             ImageView imageView = (ImageView) findViewById(R.id.imageView);
             imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
 //            InputStream inputStream = new FileInputStream(selectedImage);//You can get an inputStream using any IO API

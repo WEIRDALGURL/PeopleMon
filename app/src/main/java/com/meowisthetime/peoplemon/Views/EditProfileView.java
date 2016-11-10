@@ -99,6 +99,12 @@ public class EditProfileView  extends LinearLayout{
 
     }
 
+//    public void updateInfo() {
+//        Account updateInfo = new Account(editName.getText().toString());
+//        RestClient restClient = new RestClient();
+//        restClient.getApiService().updateInfo(updateInfo).enqueue(new Callback<Account>() {
+//    }
+
 
 }
 

@@ -145,16 +145,16 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
 
         final Runnable r = new Runnable() {
             public void run() {
-                checkNear.postDelayed(this, 2000);
+                checkNear.postDelayed(this, 3000);
                 viewNearby();
+                setCheckIn();
             }
         };
-        checkNear.postDelayed(r, 2000);
+        checkNear.postDelayed(r, 3000);
 
 //        Toast.makeText(context, "Map loaded", Toast.LENGTH_SHORT).show();
 
 
-        setCheckIn();
 
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
