@@ -19,11 +19,11 @@ import retrofit2.http.Query;
 public interface ApiService {
 
 //    @GET("api/Account/UserInfo")
-//    Call<Account[]> getUserInfo (@Path("userInfo"));
+//    Call<Account> getUserInfo);
 //
 //
-//    @POST("api/Account/UserInfo")
-//    Call<Account> addUserInfo (@Body);
+    @POST("api/Account/UserInfo")
+    Call<Account> updateInfo (@Body Account updateInfo);
 //
 //    @POST("api/Account/Logout")
 //    Call<Account> a (@Body);
@@ -45,13 +45,13 @@ public interface ApiService {
     Call<User[]> findNearby(@Query("radiusInMeters") Integer radiusInMeters);
 
 
-//    @POST("v1/User/CheckIn")
-//    Call<Void> checkin (@Body ("Latlong") Double Latlong);
-//
-//    @POST("v1/User/Catch")
-//    Call<User> a (@Body);
-//
-//
+    @POST("v1/User/CheckIn")
+    Call<Void> checkin (@Body User checkin);
+
+    @POST("v1/User/Catch")
+    Call<User> catchUser (@Body User catchUser);
+
+
 //    @GET ("v1/User/Caught")
 //    Call<User> a (@Path());
 //

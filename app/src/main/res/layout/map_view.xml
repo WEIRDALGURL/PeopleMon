@@ -2,7 +2,7 @@
 <com.meowisthetime.peoplemon.Views.MapsView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    
+
 
 <com.google.android.gms.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/map"
@@ -10,4 +10,38 @@
     android:layout_height="match_parent"
     android:layout_weight="1"/>
 
-    </com.meowisthetime.peoplemon.Views.MapsView>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/radar_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="50dp"
+        android:src="@drawable/online"
+        android:clickable="true"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/chat_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/radar_button"
+        android:src="@drawable/chat"
+        android:clickable="true"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/caught_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="30dp"
+        android:layout_toRightOf="@id/chat_button"
+        android:src="@drawable/pokeball"
+        android:clickable="true"/>
+
+</com.meowisthetime.peoplemon.Views.MapsView>

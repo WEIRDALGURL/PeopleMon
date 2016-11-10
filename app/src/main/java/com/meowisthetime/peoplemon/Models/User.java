@@ -2,8 +2,6 @@ package com.meowisthetime.peoplemon.Models;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
-
 /**
  * Created by sheamaynard on 11/7/16.
  */
@@ -26,20 +24,20 @@ public class User {
     private Double latitude;
 
     @SerializedName("Created")
-    private Date created;
+    private String created;
 
     @SerializedName("CaughtUserId")
     private String caughtUserId;
 
     @SerializedName("RadiusInMeters")
-    private Double radiusInMeters;
+    private Integer radiusInMeters;
 
 
     public User() {
     }
 
 
-    public User(String userid, String userName, String avatarBase64, Double longitude, Double latitude, Date created) {
+    public User(String userid, String userName, String avatarBase64, Double longitude, Double latitude, String created) {
         this.userid = userid;
         this.userName = userName;
         this.avatarBase64 = avatarBase64;
@@ -48,9 +46,14 @@ public class User {
         this.created = created;
     }
 
-    public User(Double longitude, Double latitude) {
+    public User(Double latitude, Double longitude) {
         this.longitude = longitude;
         this.latitude = latitude;
+    }
+
+    public User(String caughtUserId, Integer radiusInMeters) {
+        this.caughtUserId = caughtUserId;
+        this.radiusInMeters = radiusInMeters;
     }
 
     public String getUserid() {
@@ -93,11 +96,11 @@ public class User {
         this.latitude = latitude;
     }
 
-    public Date getCreated() {
+    public String getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(String created) {
         this.created = created;
     }
 
@@ -109,11 +112,11 @@ public class User {
         this.caughtUserId = caughtUserId;
     }
 
-    public Double getRadiusInMeters() {
+    public Integer getRadiusInMeters() {
         return radiusInMeters;
     }
 
-    public void setRadiusInMeters(Double radiusInMeters) {
+    public void setRadiusInMeters(Integer radiusInMeters) {
         this.radiusInMeters = radiusInMeters;
     }
 }

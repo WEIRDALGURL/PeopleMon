@@ -80,6 +80,12 @@ public class Account {
         this.password = password;
     }
 
+    public Account(String fullName) {
+        this.fullName = fullName;
+        this.avatarBase64 = avatarBase64;
+    }
+
+
     public String getId() {
         return id;
     }
