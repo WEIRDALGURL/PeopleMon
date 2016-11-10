@@ -52,8 +52,8 @@ public interface ApiService {
     Call<User> catchUser (@Body User catchUser);
 
 
-//    @GET ("v1/User/Caught")
-//    Call<User> a (@Path());
+    @GET ("v1/User/Caught")
+    Call<User[]> caughtUsers();
 //
 //
 //    @GET("v1/User/Conversations")

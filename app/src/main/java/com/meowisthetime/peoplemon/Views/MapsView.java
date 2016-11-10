@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
@@ -38,10 +39,15 @@ import com.meowisthetime.peoplemon.Adapters.NearbyAdapter;
 import com.meowisthetime.peoplemon.MainActivity;
 import com.meowisthetime.peoplemon.Models.User;
 import com.meowisthetime.peoplemon.Network.RestClient;
+import com.meowisthetime.peoplemon.PeopleMonApplication;
 import com.meowisthetime.peoplemon.R;
+import com.meowisthetime.peoplemon.Stages.CaughtStage;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import flow.Flow;
+import flow.History;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -78,6 +84,15 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
 
     @Bind(map)
     MapView mapView;
+
+    @Bind(R.id.radar_button)
+    FloatingActionButton radarButton;
+
+    @Bind(R.id.chat_button)
+    FloatingActionButton chatButton;
+
+    @Bind(R.id.caught_button)
+    FloatingActionButton caughtButton;
 
 
     public MapsView(Context context, AttributeSet attrs) {
@@ -126,6 +141,16 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
         mMap = googleMap;
         mMap.setOnMyLocationChangeListener(myLocationChangeListener);
 
+        checkNear = new Handler();
+
+        final Runnable r = new Runnable() {
+            public void run() {
+                checkNear.postDelayed(this, 2000);
+                viewNearby();
+            }
+        };
+        checkNear.postDelayed(r, 2000);
+
 //        Toast.makeText(context, "Map loaded", Toast.LENGTH_SHORT).show();
 
 
@@ -141,16 +166,6 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home, 13));
 
-
-        checkNear = new Handler();
-
-        final Runnable r = new Runnable() {
-            public void run() {
-                checkNear.postDelayed(this, 2000);
-                viewNearby();
-            }
-        };
-        checkNear.postDelayed(r, 2000);
 
 
 
@@ -282,6 +297,16 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
         }
     };
 
+
+    @OnClick(R.id.caught_button)
+    public void viewCaught() {
+        Flow flow = PeopleMonApplication.getMainFlow();
+        History newHistory = flow.getHistory().buildUpon()
+                .push(new CaughtStage())
+                .build();
+        flow.setHistory(newHistory, Flow.Direction.FORWARD);
+    }
+
     public void viewNearby() {
         RestClient restClient = new RestClient();
         restClient.getApiService().findNearby(500).enqueue(new Callback<User[]>() {
@@ -342,6 +367,8 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
                 return false;
             }
         });
+
+
     }
 
     public void catchUser() {
@@ -370,4 +397,5 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
         return false;
     }
 }
+
 

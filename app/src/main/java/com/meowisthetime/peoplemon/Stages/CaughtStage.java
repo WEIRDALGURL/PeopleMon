@@ -3,6 +3,7 @@ package com.meowisthetime.peoplemon.Stages;
 import android.app.Application;
 
 import com.meowisthetime.peoplemon.PeopleMonApplication;
+import com.meowisthetime.peoplemon.R;
 import com.meowisthetime.peoplemon.Riggers.SlideRigger;
 
 /**
@@ -13,7 +14,7 @@ public class CaughtStage extends IndexedStage {
     private final SlideRigger rigger;
 
     public CaughtStage(Application context) {
-        super(BudgetListStage.class.getName());
+        super(CaughtStage.class.getName());
         this.rigger = new SlideRigger(context);
     }
 
@@ -23,11 +24,11 @@ public class CaughtStage extends IndexedStage {
 
     @Override
     public int getLayoutId() {
-        return 0;
+        return R.layout.caught_view;
     }
 
     @Override
     public Rigger getRigger() {
-        return null;
+        return rigger;
     }
 }

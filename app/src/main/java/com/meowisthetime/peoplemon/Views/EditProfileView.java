@@ -12,13 +12,18 @@ import com.meowisthetime.peoplemon.MainActivity;
 import com.meowisthetime.peoplemon.Models.Account;
 import com.meowisthetime.peoplemon.Network.RestClient;
 import com.meowisthetime.peoplemon.R;
+import com.meowisthetime.peoplemon.Stages.LoginStage;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import flow.Flow;
+import flow.History;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.meowisthetime.peoplemon.PeopleMonApplication.getMainFlow;
 
 /**
  * Created by sheamaynard on 11/9/16.
@@ -26,6 +31,7 @@ import retrofit2.Response;
 
 public class EditProfileView  extends LinearLayout{
     private Context context;
+    Flow flow = getMainFlow();
 
 
     @Bind(R.id.edit_name)
@@ -45,6 +51,8 @@ public class EditProfileView  extends LinearLayout{
     public EditProfileView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
+
+
     }
 
     @Override
@@ -74,12 +82,17 @@ public class EditProfileView  extends LinearLayout{
             public void onResponse(Call<Account> call, Response<Account> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(context, "Information Updated", Toast.LENGTH_LONG).show();
+                    History newHistory = History.single(new LoginStage());
+                    flow.setHistory(newHistory, Flow.Direction.REPLACE);
+                } else {
+                    Toast.makeText(context, "No Updated", Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<Account> call, Throwable t) {
+                Toast.makeText(context, "Update failed", Toast.LENGTH_SHORT).show();
 
             }
         });

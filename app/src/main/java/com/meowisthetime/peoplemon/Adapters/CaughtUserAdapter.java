@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.meowisthetime.peoplemon.Models.User;
 import com.meowisthetime.peoplemon.R;
@@ -19,54 +21,115 @@ import butterknife.ButterKnife;
  * Created by sheamaynard on 11/10/16.
  */
 
-public class CaughtUserAdapter extends RecyclerView.Adapter<CaughtUserAdapter.CaughtHolder>{
+public class CaughtUserAdapter extends RecyclerView.Adapter<CaughtUserAdapter.UserHolder> {
 
-    public ArrayList<User> caughtusers;
+    public ArrayList<User> users;
     private Context context;
 
-    public CaughtUserAdapter(ArrayList<User> caughtusers, Context context) {
-        this.caughtusers = caughtusers;
+    public CaughtUserAdapter(ArrayList<User> users, Context context) {
+        this.users = users;
         this.context = context;
     }
 
 
-
-
     @Override
-    public CaughtUserAdapter.CaughtHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View inflatedView = LayoutInflater.from(context).inflate(R.layout.caught_user_item, parent, false);
-        return new CaughtUserAdapter.CaughtHolder(inflatedView);
+    public UserHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View inflateView = LayoutInflater.from(context).inflate(R.layout.caught_user_item, parent, false);
+        return new UserHolder(inflateView);
     }
 
     @Override
-    public void onBindViewHolder(CaughtUserAdapter.CaughtHolder holder, int position) {
-        User user = caughtusers.get(position);
-        holder.bindUser(user);
-    }
+    public void onBindViewHolder(UserHolder holder, int position) {
 
+//        for (User user : users){
+//            holder.bindUser(user);
+//            Toast.makeText(context, user.getUserName(), Toast.LENGTH_SHORT).show();
+//        }
+        if(position <users.size()){
+            User user = users.get(position);
+            holder.bindUser(user);
+
+            Toast.makeText(context, user.getUserName(), Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     public int getItemCount() {
-
-        return caughtusers == null ? 0 : caughtusers.size();
+//        return users == null ? 0 : users.size();
+        return users.size()+1;
     }
 
-    class CaughtHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.username_field)
-        TextView userNameField;
+    class UserHolder extends RecyclerView.ViewHolder{
 
+        @Bind(R.id.caught_avatar)
+        ImageView caughtAvatar;
 
+        @Bind(R.id.caught_username)
+        TextView caughtUserName;
 
-        public CaughtHolder(View itemView) {
+        public UserHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            ButterKnife.bind(this,itemView);
         }
 
-        public void bindUser(User user) {
-            userNameField.setText("(" + user.getUserName() + ")");
+        //        Lets put our data in our UI
+        public void bindUser(User user){
+            caughtUserName.setText(user.getUserName());
+
+            //Need to add in imageview and decoding process
+//            caughtAvatar.setText
         }
     }
 }
+
+
+//    public ArrayList<User> caughtusers;
+//    private Context context;
+//
+//    public CaughtUserAdapter(ArrayList<User> caughtusers, Context context) {
+//        this.caughtusers = caughtusers;
+//        this.context = context;
+//    }
+//
+//
+//
+//
+//    @Override
+//    public CaughtUserAdapter.CaughtHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//        View inflatedView = LayoutInflater.from(context).inflate(R.layout.caught_user_item, parent, false);
+//        return new CaughtUserAdapter.CaughtHolder(inflatedView);
+//    }
+//
+//    @Override
+//    public void onBindViewHolder(CaughtUserAdapter.CaughtHolder holder, int position) {
+//        User user = caughtusers.get(position);
+//        holder.bindUser(user);
+//    }
+//
+//
+//    @Override
+//    public int getItemCount() {
+//
+//        return caughtusers == null ? 0 : caughtusers.size();
+//    }
+//
+//    class CaughtHolder extends RecyclerView.ViewHolder {
+//
+//        @Bind(R.id.caught_username)
+//        TextView userNameField;
+//
+//
+//
+//        public CaughtHolder(View itemView) {
+//            super(itemView);
+//            ButterKnife.bind(this, itemView);
+//        }
+//
+//        public void bindUser(User user) {
+//            userNameField.setText("(" + user.getUserName() + ")");
+//        }
+//    }
+//}
 
 
