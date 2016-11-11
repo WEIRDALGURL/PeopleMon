@@ -14,7 +14,7 @@ public class User {
     @SerializedName("UserName")
     private String userName;
 
-    @SerializedName("avatarBase64")
+    @SerializedName("AvatarBase64")
     private String avatarBase64;
 
     @SerializedName("Longitude")

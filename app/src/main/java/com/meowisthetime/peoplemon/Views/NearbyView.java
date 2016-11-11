@@ -4,11 +4,10 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.widget.LinearLayout;
+import android.widget.GridLayout;
 import android.widget.Toast;
 
-import com.meowisthetime.peoplemon.Adapters.CaughtUserAdapter;
+import com.meowisthetime.peoplemon.Adapters.NearbyAdapter;
 import com.meowisthetime.peoplemon.Models.User;
 import com.meowisthetime.peoplemon.Network.RestClient;
 import com.meowisthetime.peoplemon.R;
@@ -23,19 +22,19 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by sheamaynard on 11/10/16.
+ * Created by sheamaynard on 11/11/16.
  */
 
-public class CaughtView extends LinearLayout {
+public class NearbyView extends GridLayout {
 
     private Context context;
-    private CaughtUserAdapter caughtAdapter;
+    private NearbyAdapter nearbyAdapter;
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
 
 
-    public CaughtView(Context context, AttributeSet attrs) {
+    public NearbyView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
     }
@@ -45,43 +44,43 @@ public class CaughtView extends LinearLayout {
         super.onFinishInflate();
         ButterKnife.bind(this);
 
-        caughtAdapter = new CaughtUserAdapter(new ArrayList<User>(), context);
+        nearbyAdapter = new NearbyAdapter(new ArrayList<User>(), context);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(caughtAdapter);
+        recyclerView.setAdapter(nearbyAdapter);
 
-        listCaughtPeople();
+        listNearbyPeople();
     }
 
-    private void listCaughtPeople(){
+    private void listNearbyPeople() {
 
         RestClient restClient = new RestClient();
-        restClient.getApiService().caughtUsers().enqueue(new Callback<User[]>() {
-
+        restClient.getApiService().findNearby(500).enqueue(new Callback<User[]>() {
             @Override
             public void onResponse(Call<User[]> call, Response<User[]> response) {
-                if (response.isSuccessful()){
-//
+                if (response.isSuccessful()) {
+                    nearbyAdapter.users = new ArrayList<>(Arrays.asList(response.body()));
+                    for (User user : nearbyAdapter.users) {
+//                        Location locat = new Location("");
+//                        locat.setLatitude(user.getLatitude());
+//                        locat.setLongitude(user.getLongitude());
 
-                    caughtAdapter.users = new ArrayList<>(Arrays.asList(response.body()));
-
-                    for (User user : caughtAdapter.users){
-
-                        Log.d("***CAUGHT***", user.getUserName());
-                        Log.d("***CAUGHT***", user.getAvatarBase64());
-
-                        caughtAdapter.notifyDataSetChanged();
+                        nearbyAdapter.notifyDataSetChanged();
                     }
 
-                }else{
-                    Toast.makeText(context,"Get User Info Failed" + ": " + response.code(), Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, "Get User Info Failed" + ": " + response.code(), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<User[]> call, Throwable t) {
-                Toast.makeText(context,"Get User Info Failed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Get User Info Failed", Toast.LENGTH_LONG).show();
+
             }
         });
+
     }
 }
+
+

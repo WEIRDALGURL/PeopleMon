@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.meowisthetime.peoplemon.Components.Utils;
 import com.meowisthetime.peoplemon.Models.User;
 import com.meowisthetime.peoplemon.R;
 
@@ -20,7 +21,8 @@ import butterknife.ButterKnife;
  * Created by sheamaynard on 11/9/16.
  */
 
-public class NearbyAdapter extends RecyclerView.Adapter<NearbyAdapter.NearbyHolder>{
+public class NearbyAdapter extends RecyclerView.Adapter<NearbyAdapter.NearbyHolder> {
+
 
     public ArrayList<User> users;
     private Context context;
@@ -31,8 +33,6 @@ public class NearbyAdapter extends RecyclerView.Adapter<NearbyAdapter.NearbyHold
     }
 
 
-
-
     @Override
     public NearbyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View inflatedView = LayoutInflater.from(context).inflate(R.layout.nearby_user_item, parent, false);
@@ -41,15 +41,18 @@ public class NearbyAdapter extends RecyclerView.Adapter<NearbyAdapter.NearbyHold
 
     @Override
     public void onBindViewHolder(NearbyHolder holder, int position) {
-        User user = users.get(position);
-        holder.bindUser(user);
+        if (position < users.size()) {
+            User user = users.get(position);
+            holder.bindUser(user);
+        }
     }
+
 
 
     @Override
     public int getItemCount() {
 
-        return users == null ? 0 : users.size();
+        return users.size();
     }
 
     class NearbyHolder extends RecyclerView.ViewHolder {
@@ -67,7 +70,9 @@ public class NearbyAdapter extends RecyclerView.Adapter<NearbyAdapter.NearbyHold
         }
 
         public void bindUser(User user) {
-            userNameField.setText("(" + user.getUserName() + ")");
+            userNameField.setText(user.getUserName());
+
+            userImageView.setImageBitmap(Utils.decodeImage(user.getAvatarBase64()));
         }
     }
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.meowisthetime.peoplemon.Components.Utils;
 import com.meowisthetime.peoplemon.Models.User;
 import com.meowisthetime.peoplemon.R;
 
@@ -70,58 +71,8 @@ public class CaughtUserAdapter extends RecyclerView.Adapter<CaughtUserAdapter.Us
             caughtUserName.setText(user.getUserName());
 
             //Need to add in imageview and decoding process
-//            caughtAvatar.setText
+            caughtAvatar.setImageBitmap(Utils.decodeImage(user.getAvatarBase64()));
         }
     }
 }
-
-
-//    public ArrayList<User> caughtusers;
-//    private Context context;
-//
-//    public CaughtUserAdapter(ArrayList<User> caughtusers, Context context) {
-//        this.caughtusers = caughtusers;
-//        this.context = context;
-//    }
-//
-//
-//
-//
-//    @Override
-//    public CaughtUserAdapter.CaughtHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        View inflatedView = LayoutInflater.from(context).inflate(R.layout.caught_user_item, parent, false);
-//        return new CaughtUserAdapter.CaughtHolder(inflatedView);
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(CaughtUserAdapter.CaughtHolder holder, int position) {
-//        User user = caughtusers.get(position);
-//        holder.bindUser(user);
-//    }
-//
-//
-//    @Override
-//    public int getItemCount() {
-//
-//        return caughtusers == null ? 0 : caughtusers.size();
-//    }
-//
-//    class CaughtHolder extends RecyclerView.ViewHolder {
-//
-//        @Bind(R.id.caught_username)
-//        TextView userNameField;
-//
-//
-//
-//        public CaughtHolder(View itemView) {
-//            super(itemView);
-//            ButterKnife.bind(this, itemView);
-//        }
-//
-//        public void bindUser(User user) {
-//            userNameField.setText("(" + user.getUserName() + ")");
-//        }
-//    }
-//}
-
 

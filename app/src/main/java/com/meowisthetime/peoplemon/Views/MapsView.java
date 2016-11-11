@@ -6,6 +6,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -22,8 +23,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -34,13 +33,15 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.meowisthetime.peoplemon.Adapters.NearbyAdapter;
+import com.meowisthetime.peoplemon.Components.Constants;
+import com.meowisthetime.peoplemon.Components.Utils;
 import com.meowisthetime.peoplemon.MainActivity;
 import com.meowisthetime.peoplemon.Models.User;
 import com.meowisthetime.peoplemon.Network.RestClient;
 import com.meowisthetime.peoplemon.PeopleMonApplication;
 import com.meowisthetime.peoplemon.R;
 import com.meowisthetime.peoplemon.Stages.CaughtStage;
+import com.meowisthetime.peoplemon.Stages.NearbyStage;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -64,16 +65,13 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
     private GoogleMap mMap;
     private Context context;
     private Handler checkNear;
-    private NearbyAdapter nearbyAdapter;
-    private GoogleApiClient mGoogleApiClient;
-    private LocationRequest mLocationRequest;
     private final String TAG = "************";
-    private Location lastLocation;
-    private LocationListener locationListener;
     private Double lat = 37.816380;
     private Double lng = -82.809195;
+    public static Location mLastLocation;
     private String userId;
     private String username;
+    private Bitmap avatar;
 //    private Double lat;
 //    private Double lng;
     private Marker otherUser;
@@ -110,19 +108,6 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
         mapView.onCreate(((MainActivity) getContext()).savedInstanceState);
         mapView.onResume();
 
-
-//        mGoogleApiClient = new GoogleApiClient.Builder(context)
-//                .addApi(LocationServices.API)
-//                .addConnectionCallbacks(this)
-//                .addOnConnectionFailedListener(this)
-//                .build();
-//
-//        mGoogleApiClient.connect();
-//
-//        mLocationRequest = LocationRequest.create();
-//        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-//        mLocationRequest.setInterval(20 * 100);
-
     }
 
     private void getMapAsync(MapsView mapsView) {
@@ -152,7 +137,6 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
         };
         checkNear.postDelayed(r, 3000);
 
-//        Toast.makeText(context, "Map loaded", Toast.LENGTH_SHORT).show();
 
 
 
@@ -161,21 +145,13 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
         }
         mMap.setMyLocationEnabled(true);
 
-//        LatLng sydney = new LatLng(-33.867, 151.206);
-//        LatLng paintsville = new LatLng(37.8145, -82.8071);
-
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home, 13));
 
-
-
-
-//        GroundOverlayOptions radar = new GroundOverlayOptions().image(BitmapDescriptorFactory.fromResource(R.mipmap.radar).position(Home, 500f, 500f));
-//
-//        GroundOverlay imageOverlay = mMap.addGroundOverlay(radar);
 
         }
 
     private void setCheckIn() {
+
         User checkIn = new User(lat, lng);
         RestClient restClient = new RestClient();
         restClient.getApiService().checkin(checkIn).enqueue(new Callback<Void>() {
@@ -205,53 +181,23 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
-
-//        try {
-//            lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-//        } catch (SecurityException e) {
-//            e.printStackTrace();
-//        }
-//        if (lastLocation != null) {
-//            lastLat = lastLocation.getLatitude();
-//            lastLong = lastLocation.getLongitude();
-//            Log.d("------------------>", lastLat + "  " + lastLong);
-//        } else if (lastLocation == null) {
-//            try {
-//                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, locationListener);
-//            } catch (SecurityException e) {
-//                e.printStackTrace();
-//            }
-//        } else {
-//            handleNewLocation(lastLocation);
-//        }
-//        Log.d(">>>>>>>>>>>>>>>>>>>>", "CONNECTED");
-
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-//        Log.i(TAG, "GoogleApiClient connection has been suspend");
 
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-//        Log.i(TAG, "GoogleApiClient connection has failed");
 
     }
 
 
     @Override
     public boolean onMyLocationButtonClick() {
-//        LatLng current = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation().getLongitude());
-//        mMap.addMarker(new MarkerOptions().position(current).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
         return true;
     }
-
-//    private void handleNewLocation(Location location) {
-//        Log.d(TAG, location.toString());
-//    }
 
 
     private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
@@ -264,14 +210,25 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
             Home = new LatLng(lat, lng);
             String pos = Home + "";
 //            Log.d("**", pos);
+
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home, 16));
             LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
-            mMap.addMarker(new MarkerOptions()
-                    .title("My location")
-                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher))
-                    .snippet("I am here")
-                    .draggable(true)
-                    .position(Home));
+            if (Constants.myAvatar != null) {
+                mMap.addMarker(new MarkerOptions()
+                        .title("My location")
+                        .icon(BitmapDescriptorFactory.fromBitmap(Constants.myAvatar))
+                        .snippet("I am here")
+                        .draggable(true)
+                        .position(Home));
+            } else {
+
+                mMap.addMarker(new MarkerOptions()
+                        .title("My location")
+                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher))
+                        .snippet("I am here")
+                        .draggable(true)
+                        .position(Home));
+            }
 
             final Circle circle = mMap.addCircle(new CircleOptions().center(Home)
                     .strokeColor(Color.DKGRAY).radius(100));
@@ -287,7 +244,6 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
                 @Override
                 public void onAnimationUpdate(ValueAnimator valueAnimator) {
                     float animatedFraction = valueAnimator.getAnimatedFraction();
-                    // Log.e("", "" + animatedFraction);
                     circle.setRadius(animatedFraction * 100);
                 }
             });
@@ -307,6 +263,15 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
         flow.setHistory(newHistory, Flow.Direction.FORWARD);
     }
 
+    @OnClick(R.id.radar_button)
+    public void viewRadar() {
+        Flow flow = PeopleMonApplication.getMainFlow();
+        History newHistory = flow.getHistory().buildUpon()
+                .push(new NearbyStage())
+                .build();
+        flow.setHistory(newHistory, Flow.Direction.FORWARD);
+    }
+
     public void viewNearby() {
         RestClient restClient = new RestClient();
         restClient.getApiService().findNearby(500).enqueue(new Callback<User[]>() {
@@ -318,18 +283,21 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
                         lng = user.getLongitude();
                         userId = user.getUserid();
                         username = user.getUserName();
-//                        Log.d(TAG, username + userId);
+                        avatar = (Utils.decodeImage(user.getAvatarBase64()));
                         LatLng userpos = new LatLng(lat, lng);
-                        otherUser = mMap.addMarker(new MarkerOptions()
-                                .title(username)
-//                                .icon()
-                                .snippet(userId)
-                                .position(userpos));
-
-
-
-//                        nearbyAdapter.users = new ArrayList<User>(Arrays.asList(response.body()));
-//                        nearbyAdapter.notifyDataSetChanged();
+                        if (avatar !=null) {
+                             mMap.addMarker(new MarkerOptions()
+                                    .title(username)
+                                    .icon(BitmapDescriptorFactory.fromBitmap(avatar))
+                                    .snippet(userId)
+                                    .position(userpos));
+                        }else {
+                             mMap.addMarker(new MarkerOptions()
+                                    .title(username)
+                                    .snippet(userId)
+                                    .position(userpos));
+                        }
+//
                     }
                 } else {
                     Toast.makeText(context, "view Nearby Failed: " + response.code(), Toast.LENGTH_SHORT).show();

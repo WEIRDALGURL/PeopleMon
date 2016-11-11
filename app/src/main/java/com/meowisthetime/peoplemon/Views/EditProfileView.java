@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.meowisthetime.peoplemon.Components.Constants;
 import com.meowisthetime.peoplemon.Components.Utils;
 import com.meowisthetime.peoplemon.MainActivity;
 import com.meowisthetime.peoplemon.Models.Account;
@@ -124,6 +125,7 @@ public class EditProfileView  extends LinearLayout{
                     Account authUser = response.body();
                     editName.setText(authUser.getFullName());
                     imageView.setImageBitmap(Utils.decodeImage(authUser.getAvatarBase64()));
+                    Constants.myAvatar = (Utils.decodeImage(authUser.getAvatarBase64()));
 
 
                 } else {
