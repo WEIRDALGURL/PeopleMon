@@ -323,7 +323,7 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
                         LatLng userpos = new LatLng(lat, lng);
                         otherUser = mMap.addMarker(new MarkerOptions()
                                 .title(username)
-//                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.person))
+//                                .icon()
                                 .snippet(userId)
                                 .position(userpos));
 
@@ -364,6 +364,8 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
                     }
                 });
                 alertBuilder.create().show();
+
+
 
                 return false;
             }

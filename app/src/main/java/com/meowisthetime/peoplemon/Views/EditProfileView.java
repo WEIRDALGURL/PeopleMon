@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.meowisthetime.peoplemon.MainActivity;
 import com.meowisthetime.peoplemon.Models.Account;
 import com.meowisthetime.peoplemon.Network.RestClient;
+import com.meowisthetime.peoplemon.PeopleMonApplication;
 import com.meowisthetime.peoplemon.R;
 import com.meowisthetime.peoplemon.Stages.MapStage;
 
@@ -24,7 +25,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.meowisthetime.peoplemon.Components.Constants.IMAGE;
-import static com.meowisthetime.peoplemon.PeopleMonApplication.getMainFlow;
 
 /**
  * Created by sheamaynard on 11/9/16.
@@ -32,7 +32,7 @@ import static com.meowisthetime.peoplemon.PeopleMonApplication.getMainFlow;
 
 public class EditProfileView  extends LinearLayout{
     private Context context;
-    Flow flow = getMainFlow();
+    Flow flow = PeopleMonApplication.getMainFlow();
 
 
     @Bind(R.id.edit_name)
@@ -80,6 +80,10 @@ public class EditProfileView  extends LinearLayout{
 
     @OnClick(R.id.save_button)
     public void saveTapped() {
+        History newHistory = flow.getHistory().buildUpon()
+                .push(new MapStage())
+                .build();
+        flow.setHistory(newHistory, Flow.Direction.FORWARD);
         String userName = editName.getText().toString();
         String avatar = IMAGE;
         Account updateInfo = new Account(userName, avatar);
@@ -100,10 +104,7 @@ public class EditProfileView  extends LinearLayout{
             @Override
             public void onFailure(Call<Account> call, Throwable t) {
                 Toast.makeText(context, "Update failed", Toast.LENGTH_SHORT).show();
-                History newHistory = flow.getHistory().buildUpon()
-                        .push(new MapStage())
-                        .build();
-                flow.setHistory(newHistory, Flow.Direction.FORWARD);
+
 
             }
         });
