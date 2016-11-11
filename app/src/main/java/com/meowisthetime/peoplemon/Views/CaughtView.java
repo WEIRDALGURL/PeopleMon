@@ -62,7 +62,7 @@ public class CaughtView extends LinearLayout {
             public void onResponse(Call<User[]> call, Response<User[]> response) {
                 // Is the server response between 200 to 299
                 if (response.isSuccessful()){
-                    int i = 0;
+//                    int i = 0;
 
                     caughtAdapter.users = new ArrayList<User>(Arrays.asList(response.body()));
 

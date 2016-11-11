@@ -19,7 +19,7 @@ import retrofit2.http.Query;
 public interface ApiService {
 
     @GET("api/Account/UserInfo")
-    Call<Account> getUserInfo (@Body Account Account);
+    Call<Account> getUserInfo();
 //
 //
     @POST("api/Account/UserInfo")

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.meowisthetime.peoplemon.Components.Utils;
 import com.meowisthetime.peoplemon.MainActivity;
 import com.meowisthetime.peoplemon.Models.Account;
 import com.meowisthetime.peoplemon.Network.RestClient;
@@ -62,6 +63,9 @@ public class EditProfileView  extends LinearLayout{
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
+
+        viewProfile();
+
 //        EventBus.getDefault().register(this);
 
     }
@@ -111,7 +115,29 @@ public class EditProfileView  extends LinearLayout{
 
 
     }
+    public void viewProfile() {
+        RestClient restClient = new RestClient();
+        restClient.getApiService().getUserInfo().enqueue(new Callback<Account>() {
+            @Override
+            public void onResponse(Call<Account> call, Response<Account> response) {
+                if (response.isSuccessful()) {
+                    Account authUser = response.body();
+                    editName.setText(authUser.getFullName());
+                    imageView.setImageBitmap(Utils.decodeImage(authUser.getAvatarBase64()));
 
+
+                } else {
+                    Toast.makeText(context, "getinfofailed: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<Account> call, Throwable t) {
+                Toast.makeText(context, "getinfofailed", Toast.LENGTH_SHORT).show();
+
+            }
+
+        });
+    }
 
 }
 

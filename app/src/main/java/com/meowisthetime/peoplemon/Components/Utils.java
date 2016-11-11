@@ -39,9 +39,18 @@ public class Utils {
                 decodedByte = resize(decodedByte);
                 return decodedByte;
             }
-        }
-        return null;
+        } return null;
+
     }
+
+
+
+
+//        String encodedImage = user.getAvatarBase64();
+//        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//        return null;
+//    }
     public static String encodeTobase64(Bitmap bitmap) {
         bitmap = resize(bitmap);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

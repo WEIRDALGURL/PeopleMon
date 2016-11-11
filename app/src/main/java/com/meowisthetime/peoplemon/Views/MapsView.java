@@ -16,7 +16,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -264,7 +263,7 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
             lng = location.getLongitude();
             Home = new LatLng(lat, lng);
             String pos = Home + "";
-            Log.d("**", pos);
+//            Log.d("**", pos);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home, 16));
             LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
             mMap.addMarker(new MarkerOptions()
@@ -319,7 +318,7 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
                         lng = user.getLongitude();
                         userId = user.getUserid();
                         username = user.getUserName();
-                        Log.d(TAG, username + userId);
+//                        Log.d(TAG, username + userId);
                         LatLng userpos = new LatLng(lat, lng);
                         otherUser = mMap.addMarker(new MarkerOptions()
                                 .title(username)
