@@ -25,8 +25,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.meowisthetime.peoplemon.Components.Constants.IMAGE;
 import static com.meowisthetime.peoplemon.Components.Constants.apiKey;
-import static com.meowisthetime.peoplemon.Components.Constants.avatar;
 
 /**
  * Created by sheamaynard on 10/31/16.
@@ -93,7 +93,7 @@ public class RegisterView extends LinearLayout {
             registerButton.setEnabled(false);
             spinner.setVisibility(VISIBLE);
 
-            Account account = new Account(email, username, avatar, apiKey, password);
+            Account account = new Account(email, username, IMAGE, apiKey, password);
             RestClient restClient = new RestClient();
             restClient.getApiService().register(account).enqueue(new Callback<Void>() {
                 @Override

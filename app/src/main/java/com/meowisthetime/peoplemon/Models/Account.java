@@ -63,13 +63,13 @@ public class Account {
     private String grantType;
 
 
-    public Account(String username, String password) {
-    }
+//    public Account(String username, String password) {
+//    }
 
     public Account(String email, String fullName, String avatarBase64, String apiKey, String password) {
         this.email = email;
         this.fullName = fullName;
-        this.avatarBase64 = Constants.avatar;
+        this.avatarBase64 = Constants.IMAGE;
         this.apiKey = Constants.apiKey;
         this.password = password;
     }
@@ -80,7 +80,7 @@ public class Account {
         this.password = password;
     }
 
-    public Account(String fullName) {
+    public Account(String fullName, String avatarBase64) {
         this.fullName = fullName;
         this.avatarBase64 = avatarBase64;
     }

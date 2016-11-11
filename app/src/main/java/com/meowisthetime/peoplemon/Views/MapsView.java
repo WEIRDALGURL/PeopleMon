@@ -141,13 +141,14 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
         mMap = googleMap;
         mMap.setOnMyLocationChangeListener(myLocationChangeListener);
 
+        setCheckIn();
+
         checkNear = new Handler();
 
         final Runnable r = new Runnable() {
             public void run() {
                 checkNear.postDelayed(this, 3000);
                 viewNearby();
-                setCheckIn();
             }
         };
         checkNear.postDelayed(r, 3000);

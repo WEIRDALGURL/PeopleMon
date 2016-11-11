@@ -40,10 +40,6 @@ public class CaughtUserAdapter extends RecyclerView.Adapter<CaughtUserAdapter.Us
     @Override
     public void onBindViewHolder(UserHolder holder, int position) {
 
-//        for (User user : users){
-//            holder.bindUser(user);
-//            Toast.makeText(context, user.getUserName(), Toast.LENGTH_SHORT).show();
-//        }
         if(position <users.size()){
             User user = users.get(position);
             holder.bindUser(user);
@@ -52,8 +48,7 @@ public class CaughtUserAdapter extends RecyclerView.Adapter<CaughtUserAdapter.Us
 
     @Override
     public int getItemCount() {
-//        return users == null ? 0 : users.size();
-        return users.size()+1;
+        return users.size();
     }
 
 

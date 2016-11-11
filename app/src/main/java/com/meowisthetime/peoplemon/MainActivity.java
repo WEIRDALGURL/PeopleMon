@@ -5,6 +5,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
@@ -19,10 +20,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.davidstemmer.flow.plugin.screenplay.ScreenplayDispatcher;
+import com.meowisthetime.peoplemon.Components.Utils;
+import com.meowisthetime.peoplemon.Models.ImageLoadedEvent;
 import com.meowisthetime.peoplemon.Network.UserStore;
 import com.meowisthetime.peoplemon.Stages.EditProfileStage;
 import com.meowisthetime.peoplemon.Stages.LoginStage;
 import com.meowisthetime.peoplemon.Stages.MapStage;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -149,37 +154,17 @@ public class MainActivity extends AppCompatActivity {
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
 
-//            File file = new File(picturePath);
-//
-//            //Convert to Bitmap Array
-//            Bitmap bm = BitmapFactory.decodeFile(file.getAbsolutePath());
-//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//            bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
-//            byte[] b = baos.toByteArray();
-//
-//            //Take the bitmap Array and e
-//            // encode it to Base64
-//            String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-//
-//            Log.d("***BASE64****", encodedImage);
-//            makeApiCallForProfile(encodedImage);
-
             ImageView imageView = (ImageView) findViewById(R.id.imageView);
-            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-//            InputStream inputStream = new FileInputStream(selectedImage);//You can get an inputStream using any IO API
-//            byte[] bytes;
-//            byte[] buffer = new byte[8192];
-//            int bytesRead;
-//            ByteArrayOutputStream output = new ByteArrayOutputStream();
-//            try {
-//                while ((bytesRead = inputStream.read(buffer)) != -1) {
-//                    output.write(buffer, 0, bytesRead);
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            bytes = output.toByteArray();
-//            String encodedString = Base64.encodeToString(bytes, Base64.DEFAULT);
+            Bitmap image = BitmapFactory.decodeFile(picturePath);
+            Utils.encodeTobase64(image);
+
+            EventBus.getDefault().post(new ImageLoadedEvent(picturePath));
+
+            try {
+                imageView.setImageBitmap(image);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
         }
     }
